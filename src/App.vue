@@ -1,20 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>
+      <span>多张图片切换显示 ： </span>
+
+      <router-link class="router" to="/opacity">
+        <button >效果好消耗高</button>
+      </router-link>
+
+      <router-link class="router" to="/about">
+        <button>效果差消耗低</button>
+      </router-link>
+    </div>
+    <router-view />
   </div>
 </template>
-
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
 
 <style>
 #app {
@@ -23,6 +22,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+
+.router{
+  margin: auto 10px;
+}
+
 </style>
