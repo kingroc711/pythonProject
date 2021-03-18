@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+    <button>START</button>
+    <button>STOP</button>
     <div id="wallpager_down">
       <div id="wallpager_up"></div>
     </div>
@@ -11,7 +13,14 @@
 
 export default {
   name: 'Home',
-  components: {
+  components: {},
+  methods: {
+    start () {
+      console.log('start')
+    },
+    stop () {
+      console.log('stop')
+    }
   }
 }
 </script>
