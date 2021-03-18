@@ -3,11 +3,11 @@
     <div class="box">
       <span>多张图片切换显示 ： </span>
 
-      <router-link class="router" to="/opacity">
+      <router-link class="router" to="/doublelay">
         <button >效果好消耗高</button>
       </router-link>
 
-      <router-link class="router" to="/about">
+      <router-link class="router" to="/onelay">
         <button>效果差消耗低</button>
       </router-link>
     </div>

@@ -1,7 +1,8 @@
 <template>
   <div class="home">
-    <button class="button1" @click="start">START</button>
-    <button class="button2" @click="stop">STOP</button>
+    <button class="button1" @click="start">START 0</button>
+    <button class="button2" @click="stop">STOP 0</button>
+    <span>双层效果</span>
     <div id="wallpager_down">
       <div id="wallpager_up"></div>
     </div>
@@ -11,12 +12,20 @@
 <script>
 export default {
   name: "Home",
+  beforeRouteLeave(to, from, next) {
+    console.log("beforeRouteLeave");
+    this.stop();
+    next();
+  },
   data() {
     return {
       index_0: -1,
       index_1: -1,
       timehander: {},
+      opttimehander: {},
+      optTime: 10,
       timeOut: 3 * 1000,
+      optTimeOut: 100,
       sliders: [
         require("../res/000.jpg"),
         require("../res/001.jpg"),
@@ -25,9 +34,10 @@ export default {
       ],
     };
   },
-
-  components: {},
   methods: {
+    fetchData() {
+      console.log("aaaaaaaa");
+    },
     start() {
       console.log("start");
       this.updateBg();
@@ -38,10 +48,20 @@ export default {
     stop() {
       console.log("stop");
       clearTimeout(this.timehander);
+      clearTimeout(this.opttimehander);
     },
     setOpacity() {
-      let e = document.getElementById("wallpager_up");
-      e.style.opacity = 0;
+      console.log("optTime : " + this.optTime);
+      if (this.optTime > 0) {
+        this.optTime--;
+        let e = document.getElementById("wallpager_up");
+        e.style.opacity = 0.1 * this.optTime;
+      } else {
+        clearTimeout(this.opttimehander);
+        this.optTime = 10;
+        this.setBg();
+        this.unsetOpacity();
+      }
     },
     unsetOpacity() {
       let e = document.getElementById("wallpager_up");
@@ -58,6 +78,7 @@ export default {
     },
     setBg() {
       console.log("setbg : " + this.sliders[this.index_0]);
+      this.updateIndex();
       let e = document.getElementById("wallpager_up");
       e.setAttribute(
         "style",
@@ -76,16 +97,25 @@ export default {
     },
     updateBg() {
       console.log("updateBg");
-      this.setOpacity();
-      this.updateIndex();
-      this.setBg();
-      this.unsetOpacity();
+      if (this.index_0 == -1) {
+        this.setBg();
+      } else {
+        this.opttimehander = setInterval(this.setOpacity, this.optTimeOut);
+      }
     },
   },
 };
 </script>
 
 <style scoped>
+span{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 40px;
+  z-index: 100;
+  color: red;
+}
 .button1 {
   left: 20%;
   position: absolute;
@@ -122,6 +152,5 @@ export default {
   position: fixed;
   overflow: hidden;
   color: #fff;
-  transition: all 1s linear;
 }
 </style>
